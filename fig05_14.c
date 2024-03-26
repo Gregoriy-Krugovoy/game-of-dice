@@ -33,10 +33,39 @@ int main( void )
         case 3: // 3 - проигрыш
         case 12: // 12 - проигрыш
         gameStatus = LOST; // игра завершилась проигрышем
+        break; 
+        
+        // запомнить поинт
+        default: 
+        gameStatus = CONTINUE; // игрок должен продолжать бросать кубики
+        myPoint = sum; // запомнить поинт
+        printf( "Point is: %d\n", myPoint );
+        break; // не обязательно
+    } // конец switch
 
-    }
+    // пока игра не завершится
+    while( CONTINUE == gameStatus ) { // продолжать бросать кубики
+        sum = rollDice();             // бросить кубики
 
-}
+        // определить состояние игры
+        if( sum == myPoint ) { // победа при выпадении поинта
+            gameStatus = WON;  // игра завершылась победой
+        } // конец if
+        else {
+            if( 7 == sum ) {       // проигрыш при выпадении 7
+                gameStatus = LOST; // игра завершилась проигрышем
+            } // конец if
+        } // конец else
+    } // конец while
+
+    // вывести сообщение о победе или выигрыше
+    if( WON == gameStatus ) { // игрок выиграл?
+        puts( "Player wins" );
+    } // конец if
+    else {
+        puts( "Player loses");
+    } // конец else
+} // конец main
 
 int rollDice( void ) // имитирует бросок кубиков, вычисляет сумму и выводит ее 
     {
@@ -51,4 +80,4 @@ int rollDice( void ) // имитирует бросок кубиков, вычи
         printf( "    Player rolled %d + %d = %d", die1, die2, workSum ); // вывести результат бросков
         
         return workSum;
-    } // конец функции rollDice
+                } // конец функции rollDice
